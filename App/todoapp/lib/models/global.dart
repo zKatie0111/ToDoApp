@@ -9,3 +9,9 @@ TextStyle intrayTitleStyle = new TextStyle(
     fontWeight: FontWeight.normal,
     color: darkGreyColor,
     fontSize: 50);
+
+TextStyle darkTodoTitle = new TextStyle(
+    fontFamily: 'Open Sans',
+    fontWeight: FontWeight.normal,
+    color: darkGreyColor,
+    fontSize: 25);
