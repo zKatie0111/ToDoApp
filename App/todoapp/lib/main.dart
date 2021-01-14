@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'models/global.dart';
 import 'UI/Intray/intray_page.dart';
+import 'UI/Login/loginscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Todo App',
       theme: ThemeData(
         primarySwatch: Colors.grey,
@@ -19,7 +21,21 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Todo app'),
+      home: FutureBuilder(
+        future: _calculation, // a previously-obtained Future<Stirng> or null
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot){
+          switch (snapshot.connectionState){
+            case ConnectionState.none:
+              return Text('Press button to start.');
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return Text('Awaiting result...');
+            case ConnectionState.done:
+              if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+              return Text('Result: ${snapshot.data}');
+          }
+          return null;
+        },     ),
     );
   }
 }
